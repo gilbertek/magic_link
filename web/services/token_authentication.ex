@@ -23,7 +23,7 @@ defmodule MagicLink.TokenAuthentication do
   end
 
   def provide_token(user = %User{}) do
-    send_token()
+    send_token(user)
   end
 
   @doc"""
@@ -32,7 +32,7 @@ defmodule MagicLink.TokenAuthentication do
   def verify_token_value(value) do
     AuthToken
     |> where([t], t.value == ^value)
-    |> where([t], t.inserted_at > datetime_add(^Ecto.DateTime.utc, ^(@token_max_age * -1), "seconds"))
+    |> where([t], t.inserted_at > datetime_add(^Ecto.DateTime.utc, ^(@token_max_age * -1), "second"))
     |> Repo.one()
     |> verify_token()
   end
@@ -62,6 +62,7 @@ defmodule MagicLink.TokenAuthentication do
   # User could not be found by email.
   defp send_token(nil), do: {:error, :not_found}
 
+  # Creates a token and sends it to the user.
   defp send_token(user) do
     user
     |> create_token()
