@@ -24,7 +24,7 @@ defmodule MagicLink.Router do
   end
 
   if Mix.env == :dev do
-    forward "/email_previews/:email_name", EmailPreviewController, :show
+    forward "/sent_emails", Bamboo.EmailPreviewPlug
   end
 
   # Other scopes may use custom stacks.
