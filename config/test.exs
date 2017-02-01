@@ -17,3 +17,8 @@ config :magic_link, MagicLink.Repo,
   database: "magic_link_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# We'll use the Bamboo.TestAdapter for our tests.
+config :magic_link, MagicLink.Mailer,
+  adapter: Bamboo.TestAdapter
+

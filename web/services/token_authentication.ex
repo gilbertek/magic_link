@@ -66,6 +66,8 @@ defmodule MagicLink.TokenAuthentication do
   defp send_token(user) do
     user
     |> create_token()
+    |> AuthenticationEmail.login_link(user)
+    |> MagicLink.Mailer.deliver_now()
 
     {:ok, user}
   end
