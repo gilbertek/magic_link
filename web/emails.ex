@@ -1,12 +1,14 @@
 defmodule MagicLink.Emails do
   use Bamboo.Phoenix, view: MagicLink.EmailView
 
-  # import Bamboo.MandrillHelper
-  import Bamboo.Email
-  import Bamboo.Phoenix
+  require IEx
 
-  def login_link(user) do
-    IEX.pry
+  # import Bamboo.MandrillHelper
+  # import Bamboo.Email
+  # import Bamboo.Phoenix
+
+  def send_login_link(token_value, user) do
+    IEx.pry
   end
 
   defp base_email do

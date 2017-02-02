@@ -6,7 +6,7 @@ defmodule MagicLink.TokenAuthentication do
   import Ecto.Query, only: [where: 3]
 
   alias Phoenix.Token
-  alias MagicLink.{AuthToken, Endpoint, Repo, User}
+  alias MagicLink.{AuthToken, Endpoint, Repo, User, Emails, Mailer}
 
   # token is valid for 30 minutes / 1800 seconds
   @token_max_age 1_800
@@ -17,6 +17,7 @@ defmodule MagicLink.TokenAuthentication do
   def provide_token(nil), do: {:error, :not_found}
 
   def provide_token(email) when is_binary(email) do
+    # user = %User{email: email}
     User
     |> Repo.get_by(email: email)
     |> send_token()
@@ -66,8 +67,8 @@ defmodule MagicLink.TokenAuthentication do
   defp send_token(user) do
     user
     |> create_token()
-    |> AuthenticationEmail.login_link(user)
-    |> MagicLink.Mailer.deliver_now()
+    |> Emails.send_login_link(user)
+    |> Mailer.deliver_now()
 
     {:ok, user}
   end

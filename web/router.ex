@@ -1,6 +1,5 @@
 defmodule MagicLink.Router do
   use MagicLink.Web, :router
-  use Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]

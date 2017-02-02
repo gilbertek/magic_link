@@ -41,3 +41,8 @@ config :magic_link, MagicLink.Repo,
   database: "magic_link_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Make sure you are using Bamboo.LocalAdapter in your config
+# For development configurations
+config :magic_link, MagicLink.Mailer,
+  adapter: Bamboo.LocalAdapter
