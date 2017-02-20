@@ -1,5 +1,5 @@
 Here is your login link:
 
-<%=# signin_url(MagicLink.Endpoint, :show, @token) %>
+<%= @link  %>
 
 It is valid for 30 minutes.

@@ -8,7 +8,7 @@ defmodule MagicLink.Emails do
     base_email()
     |> to(user)
     |> subject("Your login link.")
-    |> html_body("Access your account #{token_url(token_value)}")
+    |> assign(:link, token_url(token_value))
     |> render(:authentication_link)
   end
 
@@ -20,5 +20,11 @@ defmodule MagicLink.Emails do
 
   defp token_url(token) do
     Router.Helpers.signin_url(Endpoint, :show, token)
+  end
+end
+
+defimpl Bamboo.Formatter, for: MagicLink.User do
+  def format_email_address(user, _opts) do
+    {user.email, user.email}
   end
 end
