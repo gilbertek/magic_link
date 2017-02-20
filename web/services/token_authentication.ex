@@ -17,10 +17,30 @@ defmodule MagicLink.TokenAuthentication do
   def provide_token(nil), do: {:error, :not_found}
 
   def provide_token(email) when is_binary(email) do
-    # user = %User{email: email}
-    User
-    |> Repo.get_by(email: email)
-    |> send_token()
+    email = String.downcase(email)
+
+    user_struct =
+      case Repo.get_by(User, email: email) do
+        nil -> %User{email: email}
+        user -> user
+      end
+
+    IO.inspect user_struct
+
+    changeset = User.changeset(user_struct)
+
+    case Repo.insert_or_update(changeset) do
+      {:ok, user} ->
+        IO.inspect user
+        send_token(user)
+      {:error, changeset} ->
+        IO.inspect changeset
+        changeset
+    end
+
+    # User
+    # |> Repo.get_by(email: email)
+    # |> send_token()
   end
 
   def provide_token(user = %User{}) do

@@ -6,7 +6,7 @@ defmodule MagicLink.User do
     field :password, :string
 
     timestamps()
-    has_many :auth_tokens, AuthToken
+    has_many :auth_tokens, MagicLink.AuthToken
   end
 
   @doc """
@@ -14,7 +14,7 @@ defmodule MagicLink.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(params, [:email])
+    |> validate_required([:email])
   end
 end

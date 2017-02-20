@@ -26,6 +26,6 @@ defmodule MagicLink.AuthToken do
   defp generate_token(nil), do: nil
 
   defp generate_token(user) do
-    Token.sign(Endpoit, "user", user.id)
+    Token.sign(MagicLink.Endpoint, "user", user.id)
   end
 end
